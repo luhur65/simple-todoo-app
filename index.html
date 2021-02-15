@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html> 
+				<head> 
+								<!--Import Google Icon Font--> 
+								<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+								
+								<!--Import materialize.css--> 
+								<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection"/> 
+								<link rel="stylesheet" href="./css/style.css">
+								
+								<!--Let browser know website is optimized for mobile--> 
+								<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+				</head> 
+				<body> 
+								
+								<nav class="green accent-3 z-depth-2">
+    								<div class="nav-wrapper">
+      								<a href="#!" class="brand-logo">MyTodoo</a>
+      								<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      						<ul class="right hide-on-med-and-down">
+        								<li><a class="waves-effect waves-light" href="https://dharmasitumorang.github.io">About Me</a></li>
+      						</ul>
+    							 </div>
+  						</nav>
+
+  						<ul class="sidenav" id="mobile-demo">
+  										<li>
+  														<a href="#" class="brand-logo-mobile">
+  																		<h4>MyTodoo</h4>
+  														</a>
+  										</li>
+    								<li><a href="https://dharmasitumorang.github.io">About Me</a></li>
+  						</ul>
+  						
+  						<main class="container">
+  										
+  										<h3 class="green-text darken-3">Todoo</h3>
+  														
+  														<div class="no-result-todoo hide">
+  									 						<p class="red-text darken-2">Belum ada todoo yang kamu buat!!!</p>
+  									 				</div>
+  									 
+  									 				<ul class="collection list-todoo">
+      												
+      										</ul>
+  						
+  						</main>
+  						
+  						<!-- Button to Add new Todoo -->
+  						<div class="fixed-action-btn">
+  										<a class="new-todo small z-depth-2 btn-floating btn-large waves-effect waves-light green tooltipped no-autoinit pulse" data-position="top" data-tooltip="New Todoo"><i class="material-icons">add</i></a>
+								</div>
+								
+								<!--JavaScript at end of body for optimized loading--> 
+								<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+								<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+								<script src="./js/main.js"></script>
+				</body> 
+</html>
