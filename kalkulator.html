@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fraction Toolkit</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #4a90e2;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #e2e6ea;
+      padding: 1rem 0;
+    }
+    nav button {
+      margin: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    nav button:hover {
+      background: #0056b3;
+    }
+    .content {
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    .menu {
+      display: none;
+    }
+    .menu.active {
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button.calc-btn {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Fraction & Sequence Calculator</h1>
+  </header>
+  <nav>
+    <button onclick="showMenu('faktor')">Faktor Pengali</button>
+    <button onclick="showMenu('operasi')">Operasi Pecahan</button>
+    <button onclick="showMenu('campuran')">Pecahan Campuran</button>
+    <button onclick="showMenu('pola')">Pola Deret</button>
+    <button onclick="showMenu('konversi')">Konversi Pecahan</button>
+    <button onclick="showMenu('campur2biasa')">Campuran ke Biasa</button>
+  </nav>
+  <div class="content">
+    <div id="faktor" class="menu active">
+      <h3>Faktor Pengali Pecahan</h3>
+      <input type="text" id="from" placeholder="Pecahan awal (contoh: 1/81)" />
+      <input type="text" id="to" placeholder="Pecahan target (contoh: 1/27)" />
+      <button class="calc-btn" onclick="calculateFactor()">Hitung Faktor</button>
+      <div class="result" id="resultFactor"></div>
+    </div>
+    <div id="operasi" class="menu">
+      <h3>Operasi Aritmatika Pecahan</h3>
+      <input type="text" id="frac1" placeholder="Pecahan 1 (contoh: 1/2)" />
+      <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">x</option>
+        <option value="/">:</option>
+      </select>
+      <input type="text" id="frac2" placeholder="Pecahan 2 / Bilangan bulat" />
+      <button class="calc-btn" onclick="fractionOperation()">Hitung</button>
+      <div class="result" id="resultOperasi"></div>
+    </div>
+    <div id="campuran" class="menu">
+      <h3>Perhitungan Pecahan Campuran</h3>
+      <input type="text" id="campuran1" placeholder="Campuran (contoh: 1 2/3)" />
+      <input type="text" id="campuran2" placeholder="Campuran (contoh: 2 1/4)" />
+      <button class="calc-btn" onclick="operasiCampuran()">Jumlahkan</button>
+      <div class="result" id="resultCampuran"></div>
+    </div>
+    <div id="pola" class="menu">
+      <h3>Deteksi Pola Deret</h3>
+      <input type="text" id="sequenceInput" placeholder="Contoh: 1, 2, 4, 8" />
+      <button class="calc-btn" onclick="detectSequence()">Cek Pola</button>
+      <div class="result" id="resultPola"></div>
+    </div>
+    <div id="konversi" class="menu">
+      <h3>Konversi Pecahan/Desimal</h3>
+      <input type="text" id="konversiInput" placeholder="Masukkan angka: 0.25 atau 1/4" />
+      <button class="calc-btn" onclick="konversiPecahan()">Konversi</button>
+      <div class="result" id="resultKonversi"></div>
+    </div>
+    <div id="campur2biasa" class="menu">
+      <h3>Campuran ke Pecahan Biasa</h3>
+      <input type="text" id="campurKeBiasa" placeholder="Contoh: 2 3/4" />
+      <button class="calc-btn" onclick="campuranKeBiasa()">Konversi</button>
+      <div class="result" id="resultCampurKeBiasa"></div>
+    </div>
+  </div>
+  <script>
+    function showMenu(menu) {
+      document.querySelectorAll('.menu').forEach(div => div.classList.remove('active'));
+      document.getElementById(menu).classList.add('active');
+    }
+
+    function parseFraction(str) {
+      if (str.includes(' ')) {
+        let [whole, frac] = str.split(' ');
+        let [num, den] = frac.split('/');
+        return parseInt(whole) * parseInt(den) + parseInt(num) + '/' + den;
+      }
+      return str;
+    }
+
+    function evalFraction(str) {
+      if (str.includes('/')) {
+        let [num, den] = str.split('/');
+        return parseFloat(num) / parseFloat(den);
+      }
+      return parseFloat(str);
+    }
+
+    function calculateFactor() {
+      let a = evalFraction(document.getElementById('from').value);
+      let b = evalFraction(document.getElementById('to').value);
+      document.getElementById('resultFactor').innerText = `Faktor: ${b / a}`;
+    }
+
+    function fractionOperation() {
+      let a = evalFraction(parseFraction(document.getElementById('frac1').value));
+      let b = evalFraction(parseFraction(document.getElementById('frac2').value));
+      let op = document.getElementById('operator').value;
+      let result = {
+        '+': a + b,
+        '-': a - b,
+        '*': a * b,
+        '/': a / b
+      }[op];
+      document.getElementById('resultOperasi').innerText = `Hasil: ${result}`;
+    }
+
+    function operasiCampuran() {
+      let a = evalFraction(parseFraction(document.getElementById('campuran1').value));
+      let b = evalFraction(parseFraction(document.getElementById('campuran2').value));
+      document.getElementById('resultCampuran').innerText = `Jumlah: ${a + b}`;
+    }
+
+    function detectSequence() {
+      let seq = document.getElementById('sequenceInput').value.split(',').map(s => evalFraction(s.trim()));
+      let diff = seq[1] - seq[0];
+      let ratio = seq[1] / seq[0];
+      let isArithmetic = seq.every((v, i, arr) => i === 0 || v - arr[i - 1] === diff);
+      let isGeometric = seq.every((v, i, arr) => i === 0 || arr[i - 1] !== 0 && v / arr[i - 1] === ratio);
+      document.getElementById('resultPola').innerText = isArithmetic
+        ? `Pola Aritmatika (beda: ${diff})`
+        : isGeometric
+        ? `Pola Geometrik (rasio: ${ratio})`
+        : 'Tidak dikenali';
+    }
+
+    function konversiPecahan() {
+      let val = document.getElementById('konversiInput').value;
+      if (val.includes('/')) {
+        document.getElementById('resultKonversi').innerText = `Desimal: ${evalFraction(val)}`;
+      } else {
+        let dec = parseFloat(val);
+        let den = 10000;
+        let num = Math.round(dec * den);
+        let gcd = (a, b) => b ? gcd(b, a % b) : a;
+        let d = gcd(num, den);
+        document.getElementById('resultKonversi').innerText = `Pecahan: ${num / d}/${den / d}`;
+      }
+    }
+
+    function campuranKeBiasa() {
+      let input = document.getElementById('campurKeBiasa').value;
+      let result = parseFraction(input);
+      document.getElementById('resultCampurKeBiasa').innerText = `Pecahan Biasa: ${result}`;
+    }
+  </script>
+</body>
+</html>
